@@ -1,83 +1,59 @@
 import React, { Component } from 'react';
-import quizData from './quiz.json';
-import QuestionTitle from './components/QuestionTitle';
-import Options from './components/Options';
-import Results from './components/Results';
+import Typography from '@material-ui/core/Typography';
+import wsu_logo from "./Images/wsu_logo.PNG";
+import './index.css';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
+import AppBar from '@material-ui/core/AppBar';
+import Dash from "./Dash";
+const styles = theme => ({
+  title1: {
+    flexGrow: 1,
+    color: "white",
+    marginLeft: "22%",
+    fontSize: "200%",
+    fontWeight: "500",
+    fontVariant: "all-petite-caps",
+  },
+  root: {
+    flexGrow: 1,
+  },
+  appbar_css: {
+    // height: "11%",
+  },
+  grid_css: {
+    marginTop: "1%",
+  },
+});
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-       start: 0,
-       selected: 'None yet!',
-       questions:quizData,
-       score: 0
-     }
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.retryQuiz = this.retryQuiz.bind(this);
-  }
 
-  handleSubmit() {
-    let {questions,selected,start,score} = this.state;
-    if (selected !== 'None yet!') {
-      let correctIndex = questions[start].correct;
-      if (selected === questions[start].answers[correctIndex]) {
-        this.setState({
-          score: score + 1,
-          start: start + 1,
-          selected: 'None yet!'
-        })
-      } else {
-        this.setState({
-          start: start + 1,
-          selected: 'None yet!'
-        })
-      }
-    }
-  }
-
-  handleSelect(answer) {
-    this.setState({
-      selected: answer
-    })
-  }
-
-  retryQuiz() {
-    this.setState({
-      start: 0,
-      selected: 'None yet!',
-      score: 0
-    })
-  }
   render() {
-    console.log(this.state);
-    let {questions, start } = this.state;
+    const { classes } = this.props;
     return (
-      <div className="app">
-          <header className="header">
-              <h1 >React Quiz</h1>
-          </header>
-          {start < questions.length  ? (
-            <>
-                <div className="quizStatus">
-                  <p>Progress: {start}/{questions.length}</p>
-                </div>
-                <QuestionTitle current_question={questions[start].question} />
-                <Options
-                  answers={questions[start].answers}
-                  handleSelect={this.handleSelect}
-                  handleSubmit={this.handleSubmit}
-                  selectedAnswer={this.state.selected} />
-            </>
-          )
-          :(
-            <Results score={this.state.score} end_message="Congratulations, you have finished!" retry={this.retryQuiz} />
-
-        )}
-      </div>
+      <React.Fragment>
+        <AppBar position="fixed" className={classes.appbar_css} style={{ "background": "#3b3b3b" }}>
+          <Grid container className={classes.grid_css} style={{ "background": "#3b3b3b" }}>
+            <Grid item xs><img
+              className="wsu_logo_css"
+              src={wsu_logo}
+              alt="WSU Logo"
+            >
+            </img>
+            </Grid>
+            <Grid item xs><Typography variant="h6" className={classes.title1}>
+              C-Space Questionnaire
+                      </Typography></Grid>
+            <Grid item xs></Grid>
+          </Grid>
+        </AppBar>
+        <Divider />
+        <div>
+          <Dash />
+        </div>
+      </React.Fragment>
     );
   }
 }
-
-export default App;
+export default withStyles(styles)(App);
