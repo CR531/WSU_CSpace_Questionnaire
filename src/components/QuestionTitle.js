@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const QuestionTitle = (props) =>{
+const QuestionTitle = (props) => {
   return (
     <div className="questionTitle">
       <p>{props.current_question}</p>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-// import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import MainLanding from './MainLanding';
+import UserProfile from "./UserProfile";
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
@@ -30,7 +29,7 @@ class Welcome extends Component {
         super(props);
         this.state = {
             images: [],
-            open_Questionnaire: false
+            open_User_Profile: true
         }
     }
 
@@ -38,13 +37,13 @@ class Welcome extends Component {
         document.title = 'Welcome';
     }
     handleGetStarted = async () => {
-        await this.setState({ ...this.state, open_Questionnaire: true });
+        await this.setState({ ...this.state, open_User_Profile: true });
     }
     render() {
         const { classes } = this.props;
         return (
             <div className={classes.welcome_css}>
-                {!this.state.open_Questionnaire &&
+                {!this.state.open_User_Profile &&
                     <div className={classes.root}>
                         <p className={classes.para_heading}>
                             C-Space offers access to a Multiple services to patrons. This Questionnaire tests your ability and knowledge about C-Space service.</p>
@@ -57,8 +56,9 @@ class Welcome extends Component {
                             Get Started
                 </Button>
                     </div>}
-                {this.state.open_Questionnaire &&
-                    <MainLanding />
+                {this.state.open_User_Profile &&
+                    // <MainLanding />
+                    <UserProfile />
                 }
             </div>
         );

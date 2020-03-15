@@ -13,23 +13,21 @@ class MainLanding extends Component {
       questions: quizData,
       score: 0
     }
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.retryQuiz = this.retryQuiz.bind(this);
   }
 
-  handleSubmit() {
+  handleSubmit = async () => {
     let { questions, selected, start, score } = this.state;
     if (selected !== 'None yet!') {
       let correctIndex = questions[start].correct;
       if (selected === questions[start].answers[correctIndex]) {
-        this.setState({
+        await this.setState({
           score: score + 1,
           start: start + 1,
           selected: 'None yet!'
         })
       } else {
-        this.setState({
+        await this.setState({
           start: start + 1,
           selected: 'None yet!'
         })
@@ -37,14 +35,14 @@ class MainLanding extends Component {
     }
   }
 
-  handleSelect(answer) {
-    this.setState({
+  handleSelect = async (answer) => {
+    await this.setState({
       selected: answer
     })
   }
 
-  retryQuiz() {
-    this.setState({
+  retryQuiz = async () => {
+    await this.setState({
       start: 0,
       selected: 'None yet!',
       score: 0

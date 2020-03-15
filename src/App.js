@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import AppBar from '@material-ui/core/AppBar';
-import Dash from "./Dash";
+import Welcome from "./Welcome";
 const styles = theme => ({
   title1: {
     flexGrow: 1,
@@ -18,9 +18,6 @@ const styles = theme => ({
   },
   root: {
     flexGrow: 1,
-  },
-  appbar_css: {
-    // height: "11%",
   },
   grid_css: {
     marginTop: "1%",
@@ -50,7 +47,7 @@ class App extends Component {
         </AppBar>
         <Divider />
         <div>
-          <Dash />
+          <Welcome />
         </div>
       </React.Fragment>
     );
