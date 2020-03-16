@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import UserProfile from "./UserProfile";
 import Button from '@material-ui/core/Button';
-
+import { quiz } from '../src/docs/quiz';
 const styles = theme => ({
 
     main_heading: {
@@ -58,7 +58,10 @@ class Welcome extends Component {
                     </div>}
                 {this.state.open_User_Profile &&
                     // <MainLanding />
-                    <UserProfile />
+                    <UserProfile quiz={quiz}
+                        shuffle={true}
+                        showInstantFeedback={false}
+                        continueTillCorrect={false} />
                 }
             </div>
         );

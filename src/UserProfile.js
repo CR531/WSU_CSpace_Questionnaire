@@ -7,10 +7,13 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import "react-datepicker/dist/react-datepicker.css";
 import TextField from '@material-ui/core/TextField';
-import MainLanding from "./MainLanding";
 import DateFnsUtils from '@date-io/date-fns';
 import Checkbox from '@material-ui/core/Checkbox';
-
+import Divider from '@material-ui/core/Divider';
+import "./styles.css";
+import { defaultLocale } from '../src/lib/Locale';
+import Core from "../src/lib/Core";
+import PropTypes from 'prop-types';
 
 import {
     MuiPickersUtilsProvider,
@@ -57,17 +60,128 @@ class UserProfile extends Component {
             cummulative_Gpa: "",
             exp_grad_year: "",
             test_date: null,
-            ssn_check: false
+            ssn_check: false,
+            random_Questions: []
         }
     }
     async componentDidMount() {
         document.title = 'User Profile';
     }
+    onGenericChange = (e) => {
+        this.setState({ ...this.state, [e.target.id]: e.target.value });
+    }
+    handleTestDateChange = date => {
+        this.setState({ ...this.state, test_date: date });
+    }
+    handleSSNChange = () => {
+        this.setState({
+            ...this.state,
+            ssn_check: !(this.state.ssn_check)
+        });
+    }
+
     takeTest = async () => {
-        await this.setState({ ...this.state, open_Questionnaire: true })
+        var arr = [];
+        while (arr.length < 10) {
+            var r = Math.floor(Math.random() * 30) + 1;
+            if (arr.indexOf(r) === -1) arr.push(r);
+        }
+        console.log(arr);
+        await this.setState({ ...this.state, random_Questions: arr, open_Questionnaire: true })
+    }
+    shuffleQuestions = (questions) => {
+        for (let i = questions.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [questions[i], questions[j]] = [questions[j], questions[i]];
+        }
+        return questions;
+    }
+
+    validateQuiz = (quiz) => {
+        if (!quiz) {
+            console.error("Quiz object is required.");
+            return false;
+        }
+
+        const { questions } = quiz;
+        if (!questions) {
+            console.error("Field 'questions' is required.");
+            return false;
+        }
+
+        for (var i = 0; i < questions.length; i++) {
+            const { question, questionType, answerSelectionType, answers, correctAnswer } = questions[i];
+            if (!question) {
+                console.error("Field 'question' is required.");
+                return false;
+            }
+
+            if (!questionType) {
+                console.error("Field 'questionType' is required.");
+                return false;
+            } else {
+                if (questionType !== 'text' && questionType !== 'photo') {
+                    console.error("The value of 'questionType' is either 'text' or 'photo'.");
+                    return false;
+                }
+            }
+
+            if (!answers) {
+                console.error("Field 'answers' is required.");
+                return false;
+            } else {
+                if (!Array.isArray(answers)) {
+                    console.error("Field 'answers' has to be an Array");
+                    return false;
+                }
+            }
+
+            if (!correctAnswer) {
+                console.error("Field 'correctAnswer' is required.");
+                return false;
+            }
+
+            if (!answerSelectionType) {
+                // Default single to avoid code breaking due to automatic version upgrade
+                console.warn("Field answerSelectionType should be defined since v0.3.0. Use single by default.")
+                answerSelectionType = answerSelectionType || 'single';
+            }
+
+            if (answerSelectionType === 'single' && !(typeof answerSelectionType === 'string' || answerSelectionType instanceof String)) {
+                console.error("answerSelectionType is single but expecting String in the field correctAnswer");
+                return false;
+            }
+
+            if (answerSelectionType === 'multiple' && !Array.isArray(correctAnswer)) {
+                console.error("answerSelectionType is multiple but expecting Array in the field correctAnswer");
+                return false;
+            }
+        }
+
+        return true;
     }
     render() {
-        const { classes } = this.props;
+        const { classes, quiz, shuffle, showDefaultResult, onComplete, customResultPage, continueTillCorrect } = this.props;
+
+
+        if (!this.validateQuiz(quiz)) {
+            return (null)
+        }
+
+        const appLocale = {
+            ...defaultLocale,
+            ...quiz.appLocale
+        };
+
+        let questions = quiz.questions;
+        if (shuffle) {
+            questions = this.shuffleQuestions(questions);
+        }
+
+        questions = questions.map((question, index) => ({
+            ...question,
+            questionIndex: index + 1
+        }));
         return (
             <div>
                 {!this.state.open_Questionnaire &&
@@ -238,10 +352,24 @@ class UserProfile extends Component {
                         </div>
                     </div>}
                 {this.state.open_Questionnaire &&
-                    <MainLanding />
+                    <Core
+                        questions={questions}
+                        showDefaultResult={showDefaultResult}
+                        onComplete={onComplete}
+                        customResultPage={customResultPage}
+                        continueTillCorrect={continueTillCorrect}
+                        appLocale={appLocale} />
                 }
             </div>
         );
     }
 }
+UserProfile.propTypes = {
+    quiz: PropTypes.object,
+    shuffle: PropTypes.bool,
+    showDefaultResult: PropTypes.bool,
+    onComplete: PropTypes.func,
+    customResultPage: PropTypes.func,
+    continueTillCorrect: PropTypes.bool
+};
 export default withStyles(styles)(UserProfile);
