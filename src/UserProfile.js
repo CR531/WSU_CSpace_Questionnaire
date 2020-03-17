@@ -61,7 +61,8 @@ class UserProfile extends Component {
             exp_grad_year: "",
             test_date: null,
             ssn_check: false,
-            random_Questions: []
+            random_Questions: [],
+            selected_Questions: []
         }
     }
     async componentDidMount() {
@@ -80,15 +81,25 @@ class UserProfile extends Component {
         });
     }
 
-    takeTest = async () => {
+    takeTest = async (main_Questions) => {
         var arr = [];
-        while (arr.length < 10) {
-            var r = Math.floor(Math.random() * 30) + 1;
+        var questions_Array = [];
+        while (arr.length < 5) {
+            var r = Math.floor(Math.random() * 10) + 1;
             if (arr.indexOf(r) === -1) arr.push(r);
         }
-        console.log(arr);
+
         await this.setState({ ...this.state, random_Questions: arr, open_Questionnaire: true })
+        console.log("Random numbers are " + this.state.random_Questions);
+        for (let x = 0; x < this.state.random_Questions.length; x++) {
+            await questions_Array.push(main_Questions[this.state.random_Questions[x]]);
+        }
+        questions_Array.map(val => {
+            console.log(val.question);
+        })
+        await this.setState({ ...this.state, selected_Questions: questions_Array })
     }
+
     shuffleQuestions = (questions) => {
         for (let i = questions.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -97,13 +108,14 @@ class UserProfile extends Component {
         return questions;
     }
 
-    validateQuiz = (quiz) => {
+    validateQuiz = async (quiz) => {
         if (!quiz) {
             console.error("Quiz object is required.");
             return false;
         }
 
         const { questions } = quiz;
+
         if (!questions) {
             console.error("Field 'questions' is required.");
             return false;
@@ -174,6 +186,8 @@ class UserProfile extends Component {
         };
 
         let questions = quiz.questions;
+        let main_Questions = quiz.questions;
+
         if (shuffle) {
             questions = this.shuffleQuestions(questions);
         }
@@ -346,14 +360,17 @@ class UserProfile extends Component {
                                 variant="contained"
                                 color="primary"
                                 style={{ "background": "#3b3b3b", "marginRight": "20%", "width": "12%" }}
-                                onClick={() => this.takeTest({ vertical: 'bottom', horizontal: 'center' })}>
+                                onClick={() => this.takeTest(main_Questions)}>
                                 Take Test
                         </Button>
                         </div>
                     </div>}
-                {this.state.open_Questionnaire &&
+                {this.state.open_Questionnaire
+                    && this.state.selected_Questions
+                    && this.state.selected_Questions.length > 0
+                    &&
                     <Core
-                        questions={questions}
+                        questions={this.state.selected_Questions}
                         showDefaultResult={showDefaultResult}
                         onComplete={onComplete}
                         customResultPage={customResultPage}

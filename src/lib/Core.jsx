@@ -21,6 +21,7 @@ class Core extends Component {
       showDefaultResult: this.props.showDefaultResult !== undefined ? this.props.showDefaultResult : true,
       onComplete: this.props.onComplete !== undefined ? this.props.onComplete : null,
       customResultPage: this.props.customResultPage !== undefined ? this.props.customResultPage : null,
+      showInstantFeedback: this.props.showInstantFeedback !== undefined ? this.props.showInstantFeedback : false,
       continueTillCorrect: this.props.continueTillCorrect !== undefined ? this.props.continueTillCorrect : false
     };
   }
@@ -226,9 +227,12 @@ class Core extends Component {
     }
   }
 
+
   handleChange = (event) => {
     this.setState({ filteredValue: event.target.value });
   }
+
+
 
   rawMarkup = (data) => {
     let rawMarkup = marked(data, { sanitize: true });
@@ -267,7 +271,10 @@ class Core extends Component {
       incorrect,
       userInput,
       currentQuestionIndex,
+      correctAnswer,
+      incorrectAnswer,
       endQuiz,
+      showInstantFeedback,
       buttons,
       onComplete,
       showNextQuestionButton,
@@ -309,8 +316,10 @@ class Core extends Component {
 
     return (
       <div className="questionWrapper">
+        {console.log("Size of selected array is " + questions.length)}
         {!endQuiz &&
           <div className="questionWrapperBody">
+
             <div>{appLocale.question} {currentQuestionIndex + 1}:</div>
             <h3 dangerouslySetInnerHTML={this.rawMarkup(question.question)} />
             {
@@ -334,12 +343,12 @@ class Core extends Component {
         }
 
         {
-          endQuiz && onComplete !== undefined &&
+          endQuiz && onComplete != undefined &&
           onComplete(questionSummary)
         }
 
         {
-          endQuiz && !showDefaultResult && customResultPage !== undefined &&
+          endQuiz && !showDefaultResult && customResultPage != undefined &&
           customResultPage(questionSummary)
         }
       </div>
@@ -352,6 +361,7 @@ Core.propTypes = {
   showDefaultResult: PropTypes.bool,
   onComplete: PropTypes.func,
   customResultPage: PropTypes.func,
+  showInstantFeedback: PropTypes.bool,
   continueTillCorrect: PropTypes.bool,
   appLocale: PropTypes.object
 };
