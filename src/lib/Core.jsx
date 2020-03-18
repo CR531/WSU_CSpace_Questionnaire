@@ -1,7 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import marked from 'marked';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
+const styles = theme => ({
+  main_heading: {
+    fontSize: "x-large",
+    fontWeight: "500",
+    fontVariant: "all-petite-caps",
+  },
+  grid_margin: {
+    marginBottom: "-2%",
+    textAlign: "center"
+  }
+});
 class Core extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +36,7 @@ class Core extends Component {
       onComplete: this.props.onComplete !== undefined ? this.props.onComplete : null,
       customResultPage: this.props.customResultPage !== undefined ? this.props.customResultPage : null,
       showInstantFeedback: this.props.showInstantFeedback !== undefined ? this.props.showInstantFeedback : false,
-      continueTillCorrect: this.props.continueTillCorrect !== undefined ? this.props.continueTillCorrect : false
+      continueTillCorrect: this.props.continueTillCorrect !== undefined ? this.props.continueTillCorrect : false,
     };
   }
 
@@ -206,7 +220,6 @@ class Core extends Component {
 
   nextQuestion = (currentQuestionIndex) => {
     const { questions } = this.props;
-
     var initState = {
       incorrectAnswer: false,
       correctAnswer: false,
@@ -231,8 +244,6 @@ class Core extends Component {
   handleChange = (event) => {
     this.setState({ filteredValue: event.target.value });
   }
-
-
 
   rawMarkup = (data) => {
     let rawMarkup = marked(data, { sanitize: true });
@@ -263,9 +274,8 @@ class Core extends Component {
     })
   }
 
-
   render() {
-    const { questions, appLocale } = this.props;
+    const { classes, questions, appLocale } = this.props;
     const {
       correct,
       incorrect,
@@ -285,17 +295,20 @@ class Core extends Component {
     let question = questions[currentQuestionIndex];
     let totalPoints = 0;
     let correctPoints = 0;
+    if (questions) {
+      if (questions.length > 0) {
+        for (var i = 0; i < questions.length; i++) {
+          let point = questions[i].point || 0;
+          if (typeof point === 'string' || point instanceof String) {
+            point = parseInt(point)
+          }
 
-    for (var i = 0; i < questions.length; i++) {
-      let point = questions[i].point || 0;
-      if (typeof point === 'string' || point instanceof String) {
-        point = parseInt(point)
-      }
+          totalPoints = totalPoints + point;
 
-      totalPoints = totalPoints + point;
-
-      if (correct.includes(i)) {
-        correctPoints = correctPoints + point;
+          if (correct.includes(i)) {
+            correctPoints = correctPoints + point;
+          }
+        }
       }
     }
 
@@ -320,7 +333,18 @@ class Core extends Component {
         {!endQuiz &&
           <div className="questionWrapperBody">
 
-            <div>{appLocale.question} {currentQuestionIndex + 1}:</div>
+            <div>
+              <Typography variant="h6" gutterBottom className={classes.main_heading} style={{ "marginLeft": "20%" }} >
+                <b> Question {currentQuestionIndex + 1}:</b>
+              </Typography>
+            </div>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={9} className={classes.grid_margin} >
+                <Typography variant="h6" gutterBottom className={classes.main_heading} style={{ "marginLeft": "20%" }} >
+                  <h6 dangerouslySetInnerHTML={this.rawMarkup(question.question)} />
+                </Typography>
+              </Grid>
+            </Grid>
             <h3 dangerouslySetInnerHTML={this.rawMarkup(question.question)} />
             {
               this.renderAnswers(question, buttons)
@@ -366,4 +390,4 @@ Core.propTypes = {
   appLocale: PropTypes.object
 };
 
-export default Core;
+export default withStyles(styles)(Core);

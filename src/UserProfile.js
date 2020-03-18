@@ -60,9 +60,7 @@ class UserProfile extends Component {
             cummulative_Gpa: "",
             exp_grad_year: "",
             test_date: null,
-            ssn_check: false,
-            random_Questions: [],
-            selected_Questions: []
+            ssn_check: false
         }
     }
     async componentDidMount() {
@@ -81,32 +79,32 @@ class UserProfile extends Component {
         });
     }
 
-    takeTest = async (main_Questions) => {
-        var arr = [];
-        var questions_Array = [];
-        while (arr.length < 5) {
-            var r = Math.floor(Math.random() * 10) + 1;
-            if (arr.indexOf(r) === -1) arr.push(r);
-        }
-
-        await this.setState({ ...this.state, random_Questions: arr, open_Questionnaire: true })
-        console.log("Random numbers are " + this.state.random_Questions);
-        for (let x = 0; x < this.state.random_Questions.length; x++) {
-            await questions_Array.push(main_Questions[this.state.random_Questions[x]]);
-        }
-        questions_Array.map(val => {
-            console.log(val.question);
-        })
-        await this.setState({ ...this.state, selected_Questions: questions_Array })
+    takeTest = async () => {
+        await this.setState({ ...this.state, open_Questionnaire: true })
     }
-
     shuffleQuestions = (questions) => {
         for (let i = questions.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [questions[i], questions[j]] = [questions[j], questions[i]];
         }
-        return questions;
+        if (questions) {
+            if (questions.length > 0) {
+                var arr = [];
+                var questions_Array = [];
+                while (arr.length < 5) {
+                    var r = Math.floor(Math.random() * 10) + 1;
+                    if (arr.indexOf(r) === -1) arr.push(r);
+                }
+                console.log("Random numbers are " + arr);
+                for (let x = 0; x < arr.length; x++) {
+                    questions_Array.push(questions[x]);
+                    console.log("Q is :" + questions_Array[x].question);
+                }
+            }
+        }
+        return questions_Array;
     }
+
 
     validateQuiz = async (quiz) => {
         if (!quiz) {
@@ -184,10 +182,7 @@ class UserProfile extends Component {
             ...defaultLocale,
             ...quiz.appLocale
         };
-
         let questions = quiz.questions;
-        let main_Questions = quiz.questions;
-
         if (shuffle) {
             questions = this.shuffleQuestions(questions);
         }
@@ -360,17 +355,15 @@ class UserProfile extends Component {
                                 variant="contained"
                                 color="primary"
                                 style={{ "background": "#3b3b3b", "marginRight": "20%", "width": "12%" }}
-                                onClick={() => this.takeTest(main_Questions)}>
+                                onClick={() => this.takeTest()}>
                                 Take Test
                         </Button>
                         </div>
                     </div>}
                 {this.state.open_Questionnaire
-                    && this.state.selected_Questions
-                    && this.state.selected_Questions.length > 0
                     &&
                     <Core
-                        questions={this.state.selected_Questions}
+                        questions={questions}
                         showDefaultResult={showDefaultResult}
                         onComplete={onComplete}
                         customResultPage={customResultPage}

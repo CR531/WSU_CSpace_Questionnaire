@@ -58,7 +58,8 @@ class Welcome extends Component {
                     </div>}
                 {this.state.open_User_Profile &&
                     // <MainLanding />
-                    <UserProfile quiz={quiz}
+                    <UserProfile
+                        quiz={quiz}
                         shuffle={true}
                         showInstantFeedback={false}
                         continueTillCorrect={false} />
