@@ -3,12 +3,19 @@ import { withStyles } from '@material-ui/core/styles';
 import UserProfile from "./UserProfile";
 import Button from '@material-ui/core/Button';
 import { quiz } from '../src/docs/quiz';
+import Typography from '@material-ui/core/Typography';
+
 const styles = theme => ({
 
     main_heading: {
         fontSize: "x-large",
         fontWeight: "500",
         fontVariant: "all-petite-caps",
+    },
+    welcome_text_css: {
+        fontSize: "large",
+        fontWeight: "500",
+        fontVariant: "common-ligatures",
     },
     para_heading: {
         fontFamily: "auto",
@@ -29,7 +36,7 @@ class Welcome extends Component {
         super(props);
         this.state = {
             images: [],
-            open_User_Profile: true
+            open_User_Profile: false
         }
     }
 
@@ -45,9 +52,14 @@ class Welcome extends Component {
             <div className={classes.welcome_css}>
                 {!this.state.open_User_Profile &&
                     <div className={classes.root}>
-                        <p className={classes.para_heading}>
-                            C-Space offers access to a Multiple services to patrons. This Questionnaire tests your ability and knowledge about C-Space service.</p>
-                        <p className={classes.para_heading}><b>General Policies</b></p>
+                        <Typography variant="h6" gutterBottom className={classes.welcome_text_css}>
+                            <br />
+                            <b>
+                                C-Space offers access to a Multiple services to patrons. This Questionnaire tests your ability and knowledge about C-Space service.
+                            <br />
+                                <br />
+                            </b>
+                        </Typography>
                         <Button
                             variant="contained"
                             color="primary"
@@ -56,14 +68,15 @@ class Welcome extends Component {
                             Get Started
                 </Button>
                     </div>}
-                {this.state.open_User_Profile &&
+                {
+                    this.state.open_User_Profile &&
                     <UserProfile
                         quiz={quiz}
                         shuffle={true}
                         showInstantFeedback={false}
                         continueTillCorrect={false} />
                 }
-            </div>
+            </div >
         );
     }
 }

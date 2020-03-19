@@ -50,7 +50,7 @@ class UserProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open_Questionnaire: true,
+            open_Questionnaire: false,
             name: "",
             email: "",
             wsuid: "",
@@ -359,6 +359,7 @@ class UserProfile extends Component {
                 {this.state.open_Questionnaire
                     &&
                     <Core
+                        userDetails={this.state}
                         questions={questions}
                         showDefaultResult={showDefaultResult}
                         onComplete={onComplete}

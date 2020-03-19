@@ -17,6 +17,11 @@ const styles = theme => ({
     fontWeight: "500",
     fontVariant: "all-petite-caps",
   },
+  quiz_End_css: {
+    fontSize: "large",
+    fontWeight: "500",
+    fontVariant: "common-ligatures",
+  },
   grid_margin: {
     marginBottom: "-2%",
     textAlign: "center"
@@ -42,6 +47,7 @@ class Core extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      openEndQuizTab: false,
       incorrectAnswer: false,
       correctAnswer: false,
       showNextQuestionButton: false,
@@ -269,7 +275,7 @@ class Core extends Component {
   }
   renderAnswers = (question, buttons) => {
     const { classes } = this.props
-    const { answers, correctAnswer, questionType } = question;
+    const { answers, correctAnswer } = question;
     let { answerSelectionType } = question;
     answerSelectionType = answerSelectionType || 'single';
     return (
@@ -292,18 +298,17 @@ class Core extends Component {
       </List>
     )
   }
-
+  submitTest = async () => {
+    await this.setState({ ...this.state, openEndQuizTab: true })
+  }
   render() {
-    const { classes, questions, appLocale } = this.props;
+    const { classes, questions, appLocale, userDetails } = this.props;
     const {
       correct,
       incorrect,
       userInput,
       currentQuestionIndex,
-      correctAnswer,
-      incorrectAnswer,
       endQuiz,
-      showInstantFeedback,
       buttons,
       onComplete,
       showNextQuestionButton,
@@ -348,7 +353,7 @@ class Core extends Component {
 
     return (
       <div className="questionWrapper">
-        {console.log("Size of selected array is " + questions.length)}
+        {console.log(userDetails)}
         {!endQuiz &&
           <div className="questionWrapperBody">
             <br />
@@ -385,10 +390,43 @@ class Core extends Component {
             </Grid>
           </div>
         }
-        {endQuiz && showDefaultResult && customResultPage == null &&
-          <div className="card-body">
+        {endQuiz && showDefaultResult && customResultPage == null && (this.state.openEndQuizTab === false) &&
+          < div className="card-body" style={{ "textAlign": "left" }}>
+            <br />
+            <Typography variant="h6" gutterBottom className={classes.quiz_End_css}>
+              <b>
+                You've answered all the questions. Please click below to Finish or submit the test.
+              <br />
+                <br />
+              </b>
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ "background": "#3b3b3b", "width": "12%", }}
+              onClick={() => this.submitTest()}
+            >
+              Submit
+            </Button>
+          </div>
+        }
+        {endQuiz && showDefaultResult && customResultPage == null && (this.state.openEndQuizTab === true) &&
+          <div className="card-body" style={{ "textAlign": "left" }}>
+            <Typography variant="h6" gutterBottom className={classes.quiz_End_css}>
+              <b>
+                Thank you for submitting the WSU C-Space Questionnaire Test.
+              <br />
+                <br />
+              We appreciate your interest in WSU C-Space and the time you’ve invested in applying for the Graduate Assistant role at Library Technologies.
+              <br />
+                <br />
+            Your scores are submitted and Your application will be reviewed and we will contact you with next steps.
+             <br />
+                <br />
+                {appLocale.resultPageHeaderText.replace("<correctIndexLength>", correct.length).replace("<questionLength>", questions.length)}
+              </b>
+            </Typography>
             <h2>
-              {appLocale.resultPageHeaderText.replace("<correctIndexLength>", correct.length).replace("<questionLength>", questions.length)}
             </h2>
             <h2>
               {appLocale.resultPagePoint.replace("<correctPoints>", correctPoints).replace("<totalPoints>", totalPoints)}
@@ -396,7 +434,6 @@ class Core extends Component {
             <br />
           </div>
         }
-
         {
           endQuiz && onComplete != undefined &&
           onComplete(questionSummary)
@@ -406,12 +443,13 @@ class Core extends Component {
           endQuiz && !showDefaultResult && customResultPage != undefined &&
           customResultPage(questionSummary)
         }
-      </div>
+      </div >
     );
   }
 }
 
 Core.propTypes = {
+  userDetails: PropTypes.object,
   questions: PropTypes.array,
   showDefaultResult: PropTypes.bool,
   onComplete: PropTypes.func,
