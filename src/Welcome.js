@@ -57,7 +57,6 @@ class Welcome extends Component {
                 </Button>
                     </div>}
                 {this.state.open_User_Profile &&
-                    // <MainLanding />
                     <UserProfile
                         quiz={quiz}
                         shuffle={true}

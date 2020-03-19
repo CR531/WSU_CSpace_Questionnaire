@@ -9,7 +9,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from '@date-io/date-fns';
 import Checkbox from '@material-ui/core/Checkbox';
-import Divider from '@material-ui/core/Divider';
 import "./styles.css";
 import { defaultLocale } from '../src/lib/Locale';
 import Core from "../src/lib/Core";
@@ -51,7 +50,7 @@ class UserProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open_Questionnaire: false,
+            open_Questionnaire: true,
             name: "",
             email: "",
             wsuid: "",
@@ -95,16 +94,13 @@ class UserProfile extends Component {
                     var r = Math.floor(Math.random() * 10) + 1;
                     if (arr.indexOf(r) === -1) arr.push(r);
                 }
-                console.log("Random numbers are " + arr);
                 for (let x = 0; x < arr.length; x++) {
                     questions_Array.push(questions[x]);
-                    console.log("Q is :" + questions_Array[x].question);
                 }
             }
         }
         return questions_Array;
     }
-
 
     validateQuiz = async (quiz) => {
         if (!quiz) {

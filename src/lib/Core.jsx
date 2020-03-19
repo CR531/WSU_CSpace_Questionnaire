@@ -4,7 +4,13 @@ import marked from 'marked';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
+import Button from '@material-ui/core/Button';
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import FormControl from '@material-ui/core/FormControl';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 const styles = theme => ({
   main_heading: {
     fontSize: "x-large",
@@ -14,6 +20,22 @@ const styles = theme => ({
   grid_margin: {
     marginBottom: "-2%",
     textAlign: "center"
+  },
+  question_css: {
+    marginLeft: "27%",
+    marginBottom: "-2%",
+    float: "left"
+  },
+  list: {
+    marginLeft: "4%",
+    marginRight: "4%",
+  },
+  listItem: {
+    marginBottom: "-1%"
+  },
+  answer_button_css: {
+    marginLeft: "25%",
+    width: "50%"
   }
 });
 class Core extends Component {
@@ -241,37 +263,34 @@ class Core extends Component {
   }
 
 
-  handleChange = (event) => {
-    this.setState({ filteredValue: event.target.value });
-  }
-
   rawMarkup = (data) => {
     let rawMarkup = marked(data, { sanitize: true });
     return { __html: rawMarkup };
   }
-
   renderAnswers = (question, buttons) => {
+    const { classes } = this.props
     const { answers, correctAnswer, questionType } = question;
     let { answerSelectionType } = question;
-
-    // Default single to avoid code breaking due to automatic version upgrade
     answerSelectionType = answerSelectionType || 'single';
-
-    return answers.map((answer, index) => {
-      if (buttons[index] !== undefined) {
-        return (
-          <button key={index} disabled={buttons[index].disabled || false} className={`${buttons[index].className} answerBtn btn`} onClick={() => this.checkAnswer(index + 1, correctAnswer, answerSelectionType)}>
-            {questionType === 'text' && <span>{answer}</span>}
-          </button>
-        )
-      } else {
-        return (
-          <button key={index} onClick={() => this.checkAnswer(index + 1, correctAnswer, answerSelectionType)} className="answerBtn btn">
-            {questionType === 'text' && answer}
-          </button>
-        )
-      }
-    })
+    return (
+      <List className={classes.list}>
+        <ListItem className={classes.listItem}>
+          <FormControl component="fieldset">
+            <RadioGroup aria-label="gender" name="gender1" >
+              {answers.map((answer, index) => {
+                return (
+                  < FormControlLabel
+                    value={answer}
+                    control={<Radio />}
+                    label={answer}
+                    onClick={() => this.checkAnswer(index + 1, correctAnswer, answerSelectionType)} />
+                )
+              })}
+            </RadioGroup>
+          </FormControl>
+        </ListItem>
+      </List>
+    )
   }
 
   render() {
@@ -332,26 +351,38 @@ class Core extends Component {
         {console.log("Size of selected array is " + questions.length)}
         {!endQuiz &&
           <div className="questionWrapperBody">
-
+            <br />
+            <br />
             <div>
               <Typography variant="h6" gutterBottom className={classes.main_heading} style={{ "marginLeft": "20%" }} >
                 <b> Question {currentQuestionIndex + 1}:</b>
               </Typography>
             </div>
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={9} className={classes.grid_margin} >
-                <Typography variant="h6" gutterBottom className={classes.main_heading} style={{ "marginLeft": "20%" }} >
-                  <h6 dangerouslySetInnerHTML={this.rawMarkup(question.question)} />
-                </Typography>
+              <Grid item xs={12} sm={12} className={classes.question_css} >
+                <h3 dangerouslySetInnerHTML={this.rawMarkup(question.question)} />
+              </Grid>
+              <Grid item xs={12} sm={12} className={classes.grid_margin} style={{ "marginLeft": "23%" }} >
+                {
+                  this.renderAnswers(question, buttons)
+                }
+              </Grid>
+              <Grid item xs={12} sm={8} className={classes.grid_margin} >
+                {showNextQuestionButton &&
+                  <div>
+                    <br />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      style={{ "background": "#3b3b3b", "marginRight": "-30%", "width": "15%", "float": "right" }}
+                      onClick={() => this.nextQuestion(currentQuestionIndex)}
+                    >
+                      {appLocale.nextQuestionBtn}
+                    </Button>
+                  </div>
+                }
               </Grid>
             </Grid>
-            <h3 dangerouslySetInnerHTML={this.rawMarkup(question.question)} />
-            {
-              this.renderAnswers(question, buttons)
-            }
-            {showNextQuestionButton &&
-              <div><button onClick={() => this.nextQuestion(currentQuestionIndex)} className="nextQuestionBtn btn">{appLocale.nextQuestionBtn}</button></div>
-            }
           </div>
         }
         {endQuiz && showDefaultResult && customResultPage == null &&
