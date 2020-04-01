@@ -302,74 +302,37 @@ class Core extends Component {
     )
   }
   submitTest = async () => {
-    await this.setState({ ...this.state, openEndQuizTab: true })
-    // const obj = {
-    //   name: this.state.userDetails.name,
-    //   email: this.state.userDetails.email,
-    //   wsuid: this.state.userDetails.wsuid,
-    //   phone: this.state.userDetails.phone,
-    //   major: this.state.userDetails.major,
-    //   cummulative_Gpa: this.state.userDetails.cummulative_Gpa,
-    //   exp_grad_year: this.state.userDetails.exp_grad_year,
-    //   test_date: this.state.userDetails.test_date,
-    //   ssn_check: this.state.userDetails.ssn_check,
-    //   //status: ((this.state.job_completed_check === true && this.state.job_delivered_check === true) ? "Done" : "Pending")
-    // }
-    // await axios.post('http://localhost:4000/wsu_quesionnaire/add', obj)
-    //   .then((res) => {
-    //     this.setState({ response: res.data });
-    //     console.log("response is :" + this.state.response.wsu_questionnaire);
-    //   });
-    // // if (this.state.response.printOrder === "printOrder in added successfully") {
-    // //   this.setState({ ...this.state, snackbarSuccessStatus: true })
-    // //   await this.wait(1000);
-    // // }
-    // // if (this.state.response.printOrder !== "printOrder in added successfully") {
-    // //   this.setState({ ...this.state, snackbarFailStatus: true })
-    // //   await this.wait(1000);
-    // // }
-    // // this.setState({
-    // //   ...this.state,
-    // //   activeStep: 0,
-    // //   response: {},
-    // //   name: '',
-    // //   wsuid: '',
-    // //   phone: '',
-    // //   email: '',
-    // //   email_notify_check: false,
-    // //   filament_color: '',
-    // //   notes: '',
-    // //   cspace_rep_name: '',
-    // //   order_date: null,
-    // //   grams_used: '',
-    // //   amount_due: '',
-    // //   pickup_date: null,
-    // //   receipt_number: '',
-    // //   remark_notes: '',
-    // //   job_completed_check: false,
-    // //   job_completed_GA: '',
-    // //   job_completion_date: null,
-    // //   job_completed_email_sent: false,
-    // //   job_delivered_check: false,
-    // //   job_delivered_GA: '',
-    // //   job_delivery_date: null,
-    // //   job_feedback_email_sent: false,
-    // //   status: "Pending",
-    // //   name_flag: false,
-    // //   wsuid_flag: false,
-    // //   email_flag: false,
-    // //   cspace_rep_flag: false,
-    // //   grams_used_flag: false,
-    // //   amount_due_flag: false,
-    // //   receipt_number_flag: false,
-    // //   required_snackbar: false
-    // // })
+    const obj = {
+      name: this.state.userDetails.name,
+      email: this.state.userDetails.email,
+      wsuid: this.state.userDetails.wsuid,
+      phone: this.state.userDetails.phone,
+      major: this.state.userDetails.major,
+      cummulative_Gpa: this.state.userDetails.cummulative_Gpa,
+      exp_grad_year: this.state.userDetails.exp_grad_year,
+      test_date: this.state.userDetails.test_date,
+      ssn_check: this.state.userDetails.ssn_check,
+      status: "Done"
+    }
+    await axios.post('http://localhost:4000/wsu_quesionnaire/add', obj)
+      .then((res) => {
+        this.setState({ response: res.data });
+        console.log("response is :" + this.state.response.wsu_questionnaire);
+      });
+    if (this.state.response.wsu_questionnaire === "wsu_questionnaire in added successfully") {
+      await this.setState({ ...this.state, openEndQuizTab: true })
+      await this.wait(1000);
+    }
+    this.setState({
+      ...this.state,
+      userDetails: {}
+    })
 
   }
-  // async componentDidMount() {
-  //   const { userDetails } = this.props;
-  //   await this.setState({ ...this.state, userDetails: userDetails });
-  // }
+  async componentDidMount() {
+    const { userDetails } = this.props;
+    await this.setState({ ...this.state, userDetails: userDetails });
+  }
   render() {
     const { classes, questions, appLocale, userDetails } = this.props;
     const {
