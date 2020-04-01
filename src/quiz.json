@@ -7,6 +7,7 @@
       "Both",
       "None"
     ],
+    "answerSelectionType": "single",
     "correct": 2
   },
   {
@@ -17,6 +18,7 @@
       "Package",
       "Class"
     ],
+    "answerSelectionType": "single",
     "correct": 1
   },
   {
@@ -27,6 +29,7 @@
       "A Compiler",
       "Both Compiler and Transpilar"
     ],
+    "answerSelectionType": "single",
     "correct": 3
   },
   {
@@ -36,6 +39,7 @@
       "1 Element",
       "Multiple Elements"
     ],
+    "answerSelectionType": "single",
     "correct": 1
   },
   {
@@ -46,6 +50,7 @@
       "this.state",
       "this.values"
     ],
+    "answerSelectionType": "single",
     "correct": 1
   },
   {
@@ -56,6 +61,7 @@
       "ReactJS",
       "All of the Above"
     ],
+    "answerSelectionType": "single",
     "correct": 3
   },
   {
@@ -66,6 +72,7 @@
       "Both A and B",
       "All of these"
     ],
+    "answerSelectionType": "single",
     "correct": 1
   },
   {
@@ -76,6 +83,7 @@
       "State/Property Updates",
       "All of these"
     ],
+    "answerSelectionType": "single",
     "correct": 3
   },
   {
@@ -86,6 +94,7 @@
       "componentDidUpdate",
       "componentDidMount"
     ],
+    "answerSelectionType": "single",
     "correct": 1
   },
   {
@@ -96,6 +105,7 @@
       "PropTypes",
       "props"
     ],
+    "answerSelectionType": "single",
     "correct": 3
   }
 ]

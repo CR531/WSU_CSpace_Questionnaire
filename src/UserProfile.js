@@ -116,7 +116,8 @@ class UserProfile extends Component {
         }
 
         for (var i = 0; i < questions.length; i++) {
-            const { question, questionType, answerSelectionType, answers, correctAnswer } = questions[i];
+            const { question, questionType, answers, correctAnswer } = questions[i];
+            const answerSelectionType = "single";
             if (!question) {
                 console.error("Field 'question' is required.");
                 return false;
