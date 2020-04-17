@@ -17,7 +17,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Divider
+  Divider,
+  Card,
+  CardContent
 } from '@material-ui/core';
 import axios from 'axios';
 
@@ -55,7 +57,12 @@ const styles = theme => ({
   response_dialog_header_css: {
     background: "rgba(255, 194, 23, 0.95)",
   },
-
+  main_card: {
+    width: "90%",
+    marginTop: "7%",
+    marginLeft: "4%",
+    marginRight: "4%",
+  },
 });
 class Core extends Component {
   constructor(props) {
@@ -473,49 +480,61 @@ class Core extends Component {
             </Grid>
           </div>
         }
+
         {endQuiz && showDefaultResult && customResultPage == null && (this.state.openEndQuizTab === false) &&
-          < div className="card-body" style={{ "textAlign": "left" }}>
-            <br />
-            <Typography variant="h6" gutterBottom className={classes.quiz_End_css}>
-              <b>
-                You've answered all the questions. Please click below to Finish or submit the test.
-              <br />
+          <Card className={classes.main_card}>
+            <CardContent>
+              < div className="card-body" style={{ "textAlign": "left" }}>
                 <br />
-              </b>
-            </Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ "background": "#3b3b3b", "width": "12%", }}
-              onClick={() => this.submitTest(correctPoints)}
-            >
-              Submit
+                <Typography variant="h6" gutterBottom className={classes.quiz_End_css}>
+                  <b>
+                    Hurray! You've answered all the questions.
+                <br />
+                    <br />
+                 Please click below Submit button to Finish or submit the test.
+              <br />
+                    <br />
+                  </b>
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ "background": "#3b3b3b", "width": "12%", }}
+                  onClick={() => this.submitTest(correctPoints)}
+                >
+                  Submit
             </Button>
-          </div>
+              </div>
+            </CardContent>
+          </Card>
         }
         {endQuiz && showDefaultResult && customResultPage == null && (this.state.openEndQuizTab === true) &&
-          <div className="card-body" style={{ "textAlign": "left" }}>
-            <Typography variant="h6" gutterBottom className={classes.quiz_End_css}>
-              <b>
-                Thank you for submitting the WSU C-Space Questionnaire Test.
+          <Card className={classes.main_card}>
+            <CardContent>
+              <div className="card-body" style={{ "textAlign": "left" }}>
+                <Typography variant="h6" gutterBottom className={classes.quiz_End_css}>
+                  <b>
+                    Thank you for submitting the WSU C-Space Questionnaire Test.
               <br />
-                <br />
+                    <br />
               We appreciate your interest in WSU C-Space and the time you’ve invested in applying for the Graduate Assistant role at Library Technologies.
               <br />
-                <br />
+                    <br />
             Your scores are submitted and Your application will be reviewed and we will contact you with next steps.
              <br />
+                    <br />
+                    {appLocale.resultPageHeaderText.replace("<correctIndexLength>", correct.length).replace("<questionLength>", questions.length)}
+                  </b>
+                </Typography>
+                <h2>
+                </h2>
+                <h2>
+                  {appLocale.resultPagePoint.replace("<correctPoints>", correctPoints).replace("<totalPoints>", totalPoints)}
+                </h2>
                 <br />
-                {appLocale.resultPageHeaderText.replace("<correctIndexLength>", correct.length).replace("<questionLength>", questions.length)}
-              </b>
-            </Typography>
-            <h2>
-            </h2>
-            <h2>
-              {appLocale.resultPagePoint.replace("<correctPoints>", correctPoints).replace("<totalPoints>", totalPoints)}
-            </h2>
-            <br />
-          </div>
+              </div>
+            </CardContent>
+          </Card>
         }
         {
           endQuiz && onComplete != undefined &&
