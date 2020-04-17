@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import UserProfile from "./UserProfile";
-import Button from '@material-ui/core/Button';
 import { quiz } from '../src/docs/quiz';
-import Typography from '@material-ui/core/Typography';
+import { Typography, Button } from '@material-ui/core';
 
 const styles = theme => ({
 

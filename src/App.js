@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import Typography from '@material-ui/core/Typography';
+import {
+  Typography,
+  Grid,
+  Divider,
+  AppBar
+} from '@material-ui/core';
 import wsu_logo from "./Images/wsu_logo.PNG";
 import './index.css';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
-import AppBar from '@material-ui/core/AppBar';
 import Welcome from "./Welcome";
 const styles = theme => ({
   title1: {

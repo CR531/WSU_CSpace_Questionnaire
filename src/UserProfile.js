@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { withStyles, } from '@material-ui/core/styles';
+import {
+    Button,
+    Typography,
+    Grid,
+    FormGroup,
+    FormControlLabel,
+    TextField,
+    Checkbox,
+    IconButton,
+    Snackbar,
+    SnackbarContent
+} from '@material-ui/core';
 import "react-datepicker/dist/react-datepicker.css";
-import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from '@date-io/date-fns';
-import Checkbox from '@material-ui/core/Checkbox';
 import "./styles.css";
 import { defaultLocale } from '../src/lib/Locale';
 import Core from "../src/lib/Core";
 import PropTypes from 'prop-types';
+import ErrorIcon from '@material-ui/icons/Error';
+import CloseIcon from '@material-ui/icons/Close';
+import clsx from 'clsx';
 
 import {
     MuiPickersUtilsProvider,
@@ -45,6 +53,23 @@ const styles = theme => ({
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
     },
+    message: {
+        display: 'flex',
+        alignItems: 'center',
+        fontWeight: "500",
+        fontSize: "large",
+        fontVariant: "all-petite-caps",
+    },
+    icon: {
+        fontSize: 20,
+    },
+    iconVariant: {
+        opacity: 0.9,
+        marginRight: theme.spacing(1),
+    },
+    close: {
+        padding: theme.spacing(0.5),
+    },
 });
 class UserProfile extends Component {
     constructor(props) {
@@ -59,11 +84,51 @@ class UserProfile extends Component {
             cummulative_Gpa: "",
             exp_grad_year: "",
             test_date: null,
-            ssn_check: false
+            ssn_check: false,
+            name_flag: false,
+            email_flag: false,
+            wsuid_flag: false,
+            major_flag: false,
+            exp_grad_year_flag: false,
+            required_snackbar: false
         }
     }
     async componentDidMount() {
         document.title = 'User Profile';
+        this.setState({
+            ...this.state,
+            open_Questionnaire: false,
+            name: "",
+            email: "",
+            wsuid: "",
+            phone: "",
+            major: "",
+            cummulative_Gpa: "",
+            exp_grad_year: "",
+            test_date: null,
+            ssn_check: false,
+            name_flag: false,
+            email_flag: false,
+            wsuid_flag: false,
+            major_flag: false,
+            exp_grad_year_flag: false,
+            required_snackbar: false
+        })
+        if (this.state.name === "") {
+            await this.setState({ ...this.state, name_flag: true })
+        }
+        if (this.state.email === "") {
+            await this.setState({ ...this.state, email_flag: true })
+        }
+        if (this.state.wsuid === "") {
+            await this.setState({ ...this.state, wsuid_flag: true })
+        }
+        if (this.state.major === "") {
+            await this.setState({ ...this.state, major_flag: true })
+        }
+        if (this.state.exp_grad_year === "") {
+            await this.setState({ ...this.state, exp_grad_year_flag: true })
+        }
     }
     onGenericChange = (e) => {
         this.setState({ ...this.state, [e.target.id]: e.target.value });
@@ -79,7 +144,16 @@ class UserProfile extends Component {
     }
 
     takeTest = async () => {
-        await this.setState({ ...this.state, open_Questionnaire: true })
+        if (this.state.name === "" || this.state.wsuid === "" || this.state.email === "" || this.state.major === "" || this.state.exp_grad_year === "") {
+            await this.setState({ ...this.state, required_snackbar: true });
+        }
+        if (this.state.name !== "" && this.state.wsuid !== "" && this.state.email !== "" && this.state.major !== "" && this.state.exp_grad_year !== "") {
+            await this.setState({ ...this.state, required_snackbar: false });
+            await this.setState({ ...this.state, open_Questionnaire: true })
+        }
+    }
+    handleRequiredSnackbarClose = async () => {
+        await this.setState({ ...this.state, required_snackbar: false })
     }
     shuffleQuestions = (questions) => {
         for (let i = questions.length - 1; i > 0; i--) {
@@ -301,6 +375,7 @@ class UserProfile extends Component {
                                         placeholder="Expected Graduation (Month and Year)"
                                         style={{ "width": "60%" }}
                                         className={classes.textField}
+                                        required={this.state.exp_grad_year_flag}
                                         margin="normal"
                                         variant="outlined"
                                         value={this.state.exp_grad_year}
@@ -368,6 +443,33 @@ class UserProfile extends Component {
                         continueTillCorrect={continueTillCorrect}
                         appLocale={appLocale} />
                 }
+                <Snackbar
+                    open={this.state.required_snackbar}
+                    onClose={() => this.handleRequiredSnackbarClose()}
+                    autoHideDuration={3000}
+                >
+                    <SnackbarContent
+                        style={{ "background": "black" }}
+                        aria-describedby="client-snackbar"
+                        message={
+                            <span id="client-snackbar" className={classes.message}>
+                                <ErrorIcon className={clsx(classes.icon, classes.iconVariant)} />
+                                Please Enter Required Fields
+                            </span>
+                        }
+                        action={[
+                            <IconButton
+                                key="close"
+                                aria-label="close"
+                                color="inherit"
+                                className={classes.close}
+                                onClick={() => this.handleRequiredSnackbarClose()}
+                            >
+                                <CloseIcon />
+                            </IconButton>,
+                        ]}
+                    />
+                </Snackbar>
             </div>
         );
     }

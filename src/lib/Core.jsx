@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import marked from 'marked';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
-import FormControl from '@material-ui/core/FormControl';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import {
+  Grid,
+  Typography,
+  Button,
+  ListItem,
+  List,
+  FormControl,
+  RadioGroup,
+  Radio,
+  FormControlLabel
+} from '@material-ui/core';
 import axios from 'axios';
 
 const styles = theme => ({
