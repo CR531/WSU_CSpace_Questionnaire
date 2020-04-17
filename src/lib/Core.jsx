@@ -11,14 +11,20 @@ import {
   FormControl,
   RadioGroup,
   Radio,
-  FormControlLabel
+  FormControlLabel,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Divider
 } from '@material-ui/core';
 import axios from 'axios';
 
 const styles = theme => ({
   main_heading: {
     fontSize: "x-large",
-    fontWeight: "500",
+    fontWeight: "bolder",
     fontVariant: "all-petite-caps",
   },
   quiz_End_css: {
@@ -45,7 +51,11 @@ const styles = theme => ({
   answer_button_css: {
     marginLeft: "25%",
     width: "50%"
-  }
+  },
+  response_dialog_header_css: {
+    background: "rgba(255, 194, 23, 0.95)",
+  },
+
 });
 class Core extends Component {
   constructor(props) {
@@ -70,7 +80,8 @@ class Core extends Component {
       customResultPage: this.props.customResultPage !== undefined ? this.props.customResultPage : null,
       showInstantFeedback: this.props.showInstantFeedback !== undefined ? this.props.showInstantFeedback : false,
       continueTillCorrect: this.props.continueTillCorrect !== undefined ? this.props.continueTillCorrect : false,
-      score: null
+      score: null,
+      openFailureDialog: false
     };
   }
 
@@ -279,6 +290,9 @@ class Core extends Component {
     let rawMarkup = marked(data, { sanitize: true });
     return { __html: rawMarkup };
   }
+  handleResponseClose = () => {
+    this.setState({ ...this.state, openFailureDialog: false })
+  }
   renderAnswers = (question, buttons) => {
     const { classes } = this.props
     const { answers, correctAnswer } = question;
@@ -326,6 +340,9 @@ class Core extends Component {
     if (this.state.response.wsu_questionnaire === "success") {
       await this.setState({ ...this.state, openEndQuizTab: true })
       await this.wait(1000);
+    }
+    if (this.state.response.wsu_questionnaire !== "success") {
+      await this.setState({ ...this.state, openFailureDialog: true })
     }
     this.setState({
       ...this.state,
@@ -396,6 +413,30 @@ class Core extends Component {
 
     return (
       <div className="questionWrapper">
+        {this.state.openFailureDialog &&
+          <Dialog
+            className={classes.main_heading}
+            open={true}
+            onClose={() => this.handleResponseClose()}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle className={classes.response_dialog_header_css} id="alert-dialog-title">{"Submit Status"}</DialogTitle>
+            <Divider />
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description" style={{ "color": "black", "fontWeight": "bolder" }}>
+                <br />
+                {(this.state.response !== "success") &&
+                  "Unable to save the test data. Please submit again or reach out to C-Space Representative."}
+                <br />
+              </DialogContentText>
+            </DialogContent>
+            <Divider />
+            <DialogActions>
+              <Button onClick={() => this.handleResponseClose()} color="primary" autoFocus>Ok</Button>
+            </DialogActions>
+          </Dialog>
+        }
         {!endQuiz &&
           <div className="questionWrapperBody">
             <br />
