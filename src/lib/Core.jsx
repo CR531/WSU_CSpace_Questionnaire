@@ -68,6 +68,7 @@ class Core extends Component {
       customResultPage: this.props.customResultPage !== undefined ? this.props.customResultPage : null,
       showInstantFeedback: this.props.showInstantFeedback !== undefined ? this.props.showInstantFeedback : false,
       continueTillCorrect: this.props.continueTillCorrect !== undefined ? this.props.continueTillCorrect : false,
+      score: null
     };
   }
 
@@ -301,7 +302,7 @@ class Core extends Component {
       </List>
     )
   }
-  submitTest = async () => {
+  submitTest = async (val) => {
     const obj = {
       name: this.state.userDetails.name,
       email: this.state.userDetails.email,
@@ -312,14 +313,15 @@ class Core extends Component {
       exp_grad_year: this.state.userDetails.exp_grad_year,
       test_date: this.state.userDetails.test_date,
       ssn_check: this.state.userDetails.ssn_check,
-      status: "Done"
+      status: "Done",
+      score: (val ? val : 0)
     }
     await axios.post('http://localhost:4000/wsu_quesionnaire/add', obj)
       .then((res) => {
         this.setState({ response: res.data });
         console.log("response is :" + this.state.response.wsu_questionnaire);
       });
-    if (this.state.response.wsu_questionnaire === "wsu_questionnaire in added successfully") {
+    if (this.state.response.wsu_questionnaire === "success") {
       await this.setState({ ...this.state, openEndQuizTab: true })
       await this.wait(1000);
     }
@@ -329,12 +331,19 @@ class Core extends Component {
     })
 
   }
+  wait = (ms) => {
+    var start = new Date().getTime();
+    var end = start;
+    while (end < start + ms) {
+      end = new Date().getTime();
+    }
+  }
   async componentDidMount() {
     const { userDetails } = this.props;
     await this.setState({ ...this.state, userDetails: userDetails });
   }
   render() {
-    const { classes, questions, appLocale, userDetails } = this.props;
+    const { classes, questions, appLocale } = this.props;
     const {
       correct,
       incorrect,
@@ -385,7 +394,6 @@ class Core extends Component {
 
     return (
       <div className="questionWrapper">
-        {console.log(userDetails)}
         {!endQuiz &&
           <div className="questionWrapperBody">
             <br />
@@ -436,7 +444,7 @@ class Core extends Component {
               variant="contained"
               color="primary"
               style={{ "background": "#3b3b3b", "width": "12%", }}
-              onClick={() => this.submitTest()}
+              onClick={() => this.submitTest(correctPoints)}
             >
               Submit
             </Button>

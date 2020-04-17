@@ -7,7 +7,7 @@ wsuQuestionnaireRoutes.route('/add').post(function (req, res) {
     let wsu_questionnaire = new Wsu_Quesionnaire(req.body);
     wsu_questionnaire.save()
         .then(wsu_questionnaire => {
-            res.status(200).json({ 'wsu_questionnaire': 'wsu_questionnaire in added successfully' });
+            res.status(200).json({ 'wsu_questionnaire': 'success' });
         })
         .catch(err => {
             res.status(400).send("unable to save to database");

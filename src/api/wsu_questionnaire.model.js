@@ -33,6 +33,9 @@ let Wsu_Quesionnaire = new Schema({
     },
     status: {
         type: String
+    },
+    score: {
+        type: Number
     }
 }, {
     collection: 'wsu_quesionnaire'
