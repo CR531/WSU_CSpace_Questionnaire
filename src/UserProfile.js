@@ -152,10 +152,10 @@ class UserProfile extends Component {
     }
 
     takeTest = async () => {
-        if (this.state.name === "" || this.state.wsuid === "" || this.state.email === "" || this.state.major === "" || this.state.exp_grad_year === "") {
+        if (this.state.name === "" || this.state.wsuid === "" || this.state.email === "" || this.state.major === "" || this.state.exp_grad_year === "" || this.state.test_date === null) {
             await this.setState({ ...this.state, required_snackbar: true });
         }
-        if (this.state.name !== "" && this.state.wsuid !== "" && this.state.email !== "" && this.state.major !== "" && this.state.exp_grad_year !== "") {
+        if (this.state.name !== "" && this.state.wsuid !== "" && this.state.email !== "" && this.state.major !== "" && this.state.exp_grad_year !== "" && this.state.test_date !== null) {
             await this.setState({ ...this.state, required_snackbar: false });
             await this.setState({ ...this.state, open_Questionnaire: true })
         }

@@ -88,7 +88,9 @@ class Core extends Component {
       showInstantFeedback: this.props.showInstantFeedback !== undefined ? this.props.showInstantFeedback : false,
       continueTillCorrect: this.props.continueTillCorrect !== undefined ? this.props.continueTillCorrect : false,
       score: null,
-      openFailureDialog: false
+      openFailureDialog: false,
+      minutes: 5,
+      seconds: 0,
     };
   }
 
@@ -364,9 +366,30 @@ class Core extends Component {
       end = new Date().getTime();
     }
   }
+  componentWillUnmount() {
+    clearInterval(this.myInterval)
+  }
   async componentDidMount() {
     const { userDetails } = this.props;
     await this.setState({ ...this.state, userDetails: userDetails });
+    this.myInterval = setInterval(() => {
+
+      if (this.state.seconds > 0) {
+        this.setState(({ seconds }) => ({
+          seconds: seconds - 1
+        }))
+      }
+      if (this.state.seconds === 0) {
+        if (this.state.minutes === 0) {
+          clearInterval(this.myInterval)
+        } else {
+          this.setState(({ minutes }) => ({
+            minutes: minutes - 1,
+            seconds: 59
+          }))
+        }
+      }
+    }, 1000)
   }
   render() {
     const { classes, questions, appLocale } = this.props;
@@ -444,8 +467,9 @@ class Core extends Component {
             </DialogActions>
           </Dialog>
         }
-        {!endQuiz &&
+        {!endQuiz && this.state.minutes !== 0 && this.state.seconds !== 0 &&
           <div className="questionWrapperBody">
+            <h1>Time Remaining: {this.state.minutes}:{this.state.seconds < 10 ? `0${this.state.seconds}` : this.state.seconds}</h1>
             <br />
             <br />
             <div>
