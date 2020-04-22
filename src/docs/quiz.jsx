@@ -1,11 +1,10 @@
 export const quiz = {
   "quizTitle": "React Quiz Component Demo",
-  "quizSynopsis": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim",
+  "quizSynopsis": "C-Space",
   "questions": [
     {
-      "question": "Who can use 3d printer ?",
+      "question": "Who can use 3-D printer?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Employee",
         "Students",
@@ -16,9 +15,8 @@ export const quiz = {
       "point": "10"
     },
     {
-      "question": "Which filament is used for printing 3d objects in CSpace?",
+      "question": "Which filament is used for printing 3-D objects in CSpace?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "PLA",
         "ABS",
@@ -29,22 +27,20 @@ export const quiz = {
       "point": "10"
     },
     {
-      "question": "Which of the below file extension is used for 3D printing ?",
+      "question": "Which of the below file extension is used for 3-D printing?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
-        "stl",
-        "stp",
-        "stx",
-        "std"
+        ".stl",
+        ".stp",
+        ".stx",
+        ".std"
       ],
       "correctAnswer": 1,
       "point": "10"
     },
     {
-      "question": "3d printing costs per gram ?",
+      "question": "3-D printing costs per gram?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "$0.20 per gram",
         "$0.10 per gram",
@@ -55,9 +51,8 @@ export const quiz = {
       "point": "10"
     },
     {
-      "question": "Who has the hands on access on 3D printer ?",
+      "question": "Who has the hands on access on 3D printer?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Library staff",
         "Volunteers",
@@ -68,9 +63,8 @@ export const quiz = {
       "point": "10"
     },
     {
-      "question": "You can bring your own filament to print the 3 d objects ?",
+      "question": "You can bring your own filament to print the 3-D objects?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "True",
         "False",
@@ -81,7 +75,6 @@ export const quiz = {
     {
       "question": "Payment for 3-D print order is done at?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Circulation desk",
         "Cspace desk",
@@ -94,7 +87,6 @@ export const quiz = {
     {
       "question": "Payment for the 3-D print order is done after printing",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "True",
         "False",
@@ -105,10 +97,9 @@ export const quiz = {
     {
       "question": "Which is the latest virtual reality that has been setup ?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
-        "Htc",
-        "Oculus",
+        "Htc Vive",
+        "Oculus Rift",
         "Both"
       ],
       "correctAnswer": 1,
@@ -117,7 +108,6 @@ export const quiz = {
     {
       "question": "How many zones are present in CSpace?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Three",
         "Two",
@@ -130,7 +120,6 @@ export const quiz = {
     {
       "question": "How many KIC mini scanners do we have in CSpace ?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Three",
         "Four",
@@ -142,7 +131,6 @@ export const quiz = {
     {
       "question": "You can use sound booth and one button studio without reservation?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "True",
         "False",
@@ -153,11 +141,10 @@ export const quiz = {
     {
       "question": "Which of the following is used for recording podcasts and lectures?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
-        "Sound booth",
         "One button studio",
-        "Both i and ii"
+        "Sound booth",
+        "Both I and II"
       ],
       "correctAnswer": 3,
       "point": "10"
@@ -165,11 +152,10 @@ export const quiz = {
     {
       "question": "Which of the following is used for product photography?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
-        "Foldio studio",
-        "One button studio",
-        "Soundbooth",
+        "Foldio Studio",
+        "Sound Booth",
+        "One Button Studio",
         "None of the above"
       ],
       "correctAnswer": 1,
@@ -178,7 +164,6 @@ export const quiz = {
     {
       "question": "Advanced development zone main purpose use is",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Editing media content",
         "Application development",
@@ -190,7 +175,6 @@ export const quiz = {
     {
       "question": "Media design zone main purpose use is",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Media editing",
         "Creative writing",
@@ -203,7 +187,6 @@ export const quiz = {
     {
       "question": "Workshops are conducted on which day?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Monday",
         "Tuesday",
@@ -216,7 +199,6 @@ export const quiz = {
     {
       "question": "Where can you find the workshop topics?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "University library website",
         "Cspace website",
@@ -228,32 +210,29 @@ export const quiz = {
     {
       "question": "Which of the following day is used for displaying Cspace technology?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
+        "Sunday",
         "Monday",
         "Tuesday",
-        "Thursday",
-        "Saturday"
-      ],
-      "correctAnswer": 1,
-      "point": "10"
-    },
-    {
-      "question": "which of the following is used for recording videos",
-      "questionType": "text",
-      "answerSelectionType": "single",
-      "answers": [
-        "Sound booth",
-        "One button studio",
-        "Foldio studio"
+        "Thursday"
       ],
       "correctAnswer": 2,
       "point": "10"
     },
     {
+      "question": "which of the following is used for recording videos",
+      "questionType": "text",
+      "answers": [
+        "One Button Studio",
+        "Foldio Studio",
+        "Sound Booth"
+      ],
+      "correctAnswer": 1,
+      "point": "10"
+    },
+    {
       "question": "One button studio is mainly used for ?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Practicing thesis defense",
         "recording online instructions",
@@ -266,7 +245,6 @@ export const quiz = {
     {
       "question": "which format flash drive should be used in one button studio ?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Fat32",
         "HFS+",
@@ -278,7 +256,6 @@ export const quiz = {
     {
       "question": "Flash drives will be provided at?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Cspace",
         "Circulation",
@@ -291,7 +268,6 @@ export const quiz = {
     {
       "question": "You are supposed to checkout at Cspace after using one button studio?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "True",
         "False"
@@ -302,7 +278,6 @@ export const quiz = {
     {
       "question": "Foldio 360 app is used for product photography ?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "True",
         "False",
@@ -313,11 +288,10 @@ export const quiz = {
     {
       "question": "Which zone uses simulated environment?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
-        "Virtual reality zone",
-        "Scanning zone",
-        "Advanced development zone"
+        "Virtual Reality Zone",
+        "Scanning Zone",
+        "Advanced Development Zone"
       ],
       "correctAnswer": 1,
       "point": "10"
@@ -325,7 +299,6 @@ export const quiz = {
     {
       "question": "Food and drink is permitted in sound booth",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "True",
         "False",
@@ -334,9 +307,8 @@ export const quiz = {
       "point": "10"
     },
     {
-      "question": "Soundbooth may be scheduled through which of the following",
+      "question": "Sound Booth may be scheduled through which of the following",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Sound booth calendar",
         "Cspace represenative",
@@ -348,7 +320,6 @@ export const quiz = {
     {
       "question": "Who is responsible for any damage or misuse of equipment?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Main user who scheduled",
         "Entire group",
@@ -360,7 +331,6 @@ export const quiz = {
     {
       "question": "You can leave the equipment unattended in sound booth?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "True",
         "False",
@@ -371,7 +341,6 @@ export const quiz = {
     {
       "question": "Which zone is used for editing, recording , creative writing, website development and publishing ?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Media design zone",
         "Advanced development zone",
@@ -384,10 +353,9 @@ export const quiz = {
     {
       "question": "Green screen is used for which of the following ",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Photography",
-        "filming objects",
+        "Filming Objects",
         "Both I and II"
       ],
       "correctAnswer": 1,
@@ -396,7 +364,6 @@ export const quiz = {
     {
       "question": "You can check out cameras and related items for filming and photography at",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "C-Space desk",
         "Circulation desk",
@@ -408,7 +375,6 @@ export const quiz = {
     {
       "question": "You can use sound booth and onebutton studio without reservation?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "True",
         "False",
@@ -419,7 +385,6 @@ export const quiz = {
     {
       "question": "C-Space services are used for",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Educational",
         "Cultural",
@@ -432,7 +397,6 @@ export const quiz = {
     {
       "question": "C-Space is to explore, create, learn about digital production and innovation",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "True",
         "False",
@@ -443,11 +407,10 @@ export const quiz = {
     {
       "question": "Occupants should report to which desk about a faulty device or software?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
+        "Help desk",
         "C-Space",
         "Circulation",
-        "Help desk",
         "All of the above"
       ],
       "correctAnswer": 4,
@@ -456,7 +419,6 @@ export const quiz = {
     {
       "question": "Which of the following is used for staring recording in onebutton studio",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Counter clockwise",
         "Counter anti clockwise"
@@ -467,18 +429,16 @@ export const quiz = {
     {
       "question": "Which of the following is used for stopping the recording in one button studio",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
-        "Counter clockwise",
-        "Counter anti clockwise"
+        "Counter anti clockwise",
+        "Counter clockwise"
       ],
-      "correctAnswer": 2,
+      "correctAnswer": 1,
       "point": "10"
     },
     {
       "question": "Product photo studio is used for",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Making portfolios",
         "360 images",
@@ -490,19 +450,17 @@ export const quiz = {
     {
       "question": "Which of the following is used for taking 360 image of the product",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
+        "Sound Booth",
         "Foldio studio",
-        "One button studio",
-        "Sound Booth"
+        "One button Studio"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "point": "10"
     },
     {
       "question": "You need previous video production experience to use on button studio",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "True",
         "False",
@@ -513,11 +471,10 @@ export const quiz = {
     {
       "question": "Which of the following is used for simplifying the video production workflow?",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
-        "One button studio",
+        "One Button Studio",
         "Sound Booth",
-        "Media design zone"
+        "Media Design Zone"
       ],
       "correctAnswer": 1,
       "point": "10"
@@ -526,22 +483,20 @@ export const quiz = {
     {
       "question": "Which of the following is used for creating high quality and polished video projects ",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
-        "One button studio",
         "Sound Booth",
-        "Media design zone"
+        "One Button Studio",
+        "Media Design Zone"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "point": "10"
     },
     {
       "question": "Different types of virtual reality devices present in Cspace",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Htc Vive",
-        "Oculus",
+        "Oculus Rift",
         "Both",
         "None"
       ],
@@ -551,10 +506,9 @@ export const quiz = {
     {
       "question": "Reservations are required for which of the following",
       "questionType": "text",
-      "answerSelectionType": "single",
       "answers": [
         "Sound Booth",
-        "Scanning",
+        "Scanning Zone",
         "Virtual Reality Zone",
         "Advanced Development Zone"
       ],

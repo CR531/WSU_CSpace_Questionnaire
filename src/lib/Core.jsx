@@ -91,6 +91,7 @@ class Core extends Component {
       openFailureDialog: false,
       minutes: 10,
       seconds: 0,
+      time_up: true
     };
   }
 
@@ -328,6 +329,7 @@ class Core extends Component {
     )
   }
   submitTest = async (val) => {
+    await this.setState({ ...this.state, time_up: false })
     const obj = {
       name: this.state.userDetails.name,
       email: this.state.userDetails.email,
@@ -390,6 +392,9 @@ class Core extends Component {
         }
       }
     }, 1000)
+  }
+  Reload = () => {
+    window.location.reload(false);
   }
   render() {
     const { classes, questions, appLocale } = this.props;
@@ -467,41 +472,68 @@ class Core extends Component {
             </DialogActions>
           </Dialog>
         }
-        {!endQuiz && this.state.minutes !== 0 && this.state.seconds !== 0 &&
-          <div className="questionWrapperBody">
-            <h2>Time Remaining: {this.state.minutes}:{this.state.seconds < 10 ? `0${this.state.seconds}` : this.state.seconds}</h2>
-            <br />
-            <br />
-            <div>
-              <Typography variant="h6" gutterBottom className={classes.main_heading} style={{ "marginLeft": "20%" }} >
-                <b> Question {currentQuestionIndex + 1}:</b>
-              </Typography>
-            </div>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={12} className={classes.question_css} >
-                <h3 dangerouslySetInnerHTML={this.rawMarkup(question.question)} />
-              </Grid>
-              <Grid item xs={12} sm={12} className={classes.grid_margin} style={{ "marginLeft": "23%" }} >
-                {
-                  this.renderAnswers(question, buttons)
-                }
-              </Grid>
-              <Grid item xs={12} sm={8} className={classes.grid_margin} >
-                {showNextQuestionButton &&
+        {!endQuiz &&
+          <div>
+            {
+              (this.state.minutes === 0 && this.state.seconds === 0)
+                ?
+                <Dialog
+                  className={classes.main_heading}
+                  open={this.state.time_up}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle className={classes.response_dialog_header_css} id="alert-dialog-title">{"Oops Time up!"}</DialogTitle>
+                  <Divider />
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description" style={{ "color": "black", "fontWeight": "bolder" }}>
+                      <br />
+                      You ran out of time. Please click proceed to submit the answers done so far.
+                      <br />
+                    </DialogContentText>
+                  </DialogContent>
+                  <Divider />
+                  <DialogActions>
+                    <Button onClick={() => this.submitTest(correctPoints)} color="primary" autoFocus>Proceed</Button>
+                  </DialogActions>
+                </Dialog>
+                :
+                <div className="questionWrapperBody">
+                  <h2>Time Remaining: {this.state.minutes}:{this.state.seconds < 10 ? `0${this.state.seconds}` : this.state.seconds}</h2>
+                  <br />
+                  <br />
                   <div>
-                    <br />
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{ "background": "#3b3b3b", "marginRight": "-30%", "width": "15%", "float": "right" }}
-                      onClick={() => this.nextQuestion(currentQuestionIndex)}
-                    >
-                      {appLocale.nextQuestionBtn}
-                    </Button>
+                    <Typography variant="h6" gutterBottom className={classes.main_heading} style={{ "marginLeft": "20%" }} >
+                      <b> Question {currentQuestionIndex + 1}:</b>
+                    </Typography>
                   </div>
-                }
-              </Grid>
-            </Grid>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} sm={12} className={classes.question_css} >
+                      <h3 dangerouslySetInnerHTML={this.rawMarkup(question.question)} />
+                    </Grid>
+                    <Grid item xs={12} sm={12} className={classes.grid_margin} style={{ "marginLeft": "23%" }} >
+                      {
+                        this.renderAnswers(question, buttons)
+                      }
+                    </Grid>
+                    <Grid item xs={12} sm={8} className={classes.grid_margin} >
+                      {showNextQuestionButton &&
+                        <div>
+                          <br />
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            style={{ "background": "#3b3b3b", "marginRight": "-30%", "width": "15%", "float": "right" }}
+                            onClick={() => this.nextQuestion(currentQuestionIndex)}
+                          >
+                            {appLocale.nextQuestionBtn}
+                          </Button>
+                        </div>
+                      }
+                    </Grid>
+                  </Grid>
+                </div>
+            }
           </div>
         }
 
@@ -532,7 +564,7 @@ class Core extends Component {
             </CardContent>
           </Card>
         }
-        {endQuiz && showDefaultResult && customResultPage == null && (this.state.openEndQuizTab === true) &&
+        {showDefaultResult && customResultPage == null && (this.state.openEndQuizTab === true) &&
           <Card className={classes.main_card}>
             <CardContent>
               <div className="card-body" style={{ "textAlign": "left" }}>
@@ -557,6 +589,16 @@ class Core extends Component {
                 </h2>
                 <br />
               </div>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ "background": "#3b3b3b", "width": "12%", }}
+                onClick={() => this.Reload()}
+              >
+                Close
+            </Button>
+
+
             </CardContent>
           </Card>
         }
