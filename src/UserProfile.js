@@ -172,8 +172,8 @@ class UserProfile extends Component {
             if (questions.length > 0) {
                 var arr = [];
                 var questions_Array = [];
-                while (arr.length < 5) {
-                    var r = Math.floor(Math.random() * 10) + 1;
+                while (arr.length < 10) {
+                    var r = Math.floor(Math.random() * 45) + 1;
                     if (arr.indexOf(r) === -1) arr.push(r);
                 }
                 for (let x = 0; x < arr.length; x++) {

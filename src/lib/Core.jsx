@@ -89,7 +89,7 @@ class Core extends Component {
       continueTillCorrect: this.props.continueTillCorrect !== undefined ? this.props.continueTillCorrect : false,
       score: null,
       openFailureDialog: false,
-      minutes: 5,
+      minutes: 10,
       seconds: 0,
     };
   }
@@ -469,7 +469,7 @@ class Core extends Component {
         }
         {!endQuiz && this.state.minutes !== 0 && this.state.seconds !== 0 &&
           <div className="questionWrapperBody">
-            <h1>Time Remaining: {this.state.minutes}:{this.state.seconds < 10 ? `0${this.state.seconds}` : this.state.seconds}</h1>
+            <h2>Time Remaining: {this.state.minutes}:{this.state.seconds < 10 ? `0${this.state.seconds}` : this.state.seconds}</h2>
             <br />
             <br />
             <div>
